@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Form, Col} from 'react-bootstrap';
+import {Form} from 'react-bootstrap';
 import './App.css';
 import axios from 'axios';
 import copy from 'copy-to-clipboard';
@@ -38,35 +38,33 @@ class App extends React.Component {
    const {shortenedUrl} = this.state;
    if(shortenedUrl !== '' && shortenedUrl !== 'Invalid URL'){
     copy(this.state.shortenedUrl);
-    alert("Copied to clipboard");
     this.setState({
       isCopied: true
     });
    } 
  }
   render(){
-    function Heading(){
-      return  <Form.Label>Paste a link to shorten it</Form.Label>;
-    }
-    var resultStyle = {
+    let resultStyle = {
     };
-    this.state.shortenedUrl==='Invalid URL'
+    this.state.shortenedUrl === 'Invalid URL'
       ?resultStyle.color = 'red'
-      : resultStyle.color = 'black';
+      :resultStyle.color = 'black';
       return(
         <div className='container'>
           <Form.Row className='row-1'>
-            <Heading/>
+            <Form.Label>Paste a link to shorten it</Form.Label>
           </Form.Row>
-            <Input click={this.sendRequest} 
-                   onGetUrl={(e)=>this.getUrl(e)}
+            <Input 
+              onClick={this.sendRequest} 
+              onGetUrl={(e) => this.getUrl(e)}
             />
           <Form.Row className='row-3'>
-            <Output shortUrl={this.state.shortenedUrl} 
-                    style={resultStyle}
+            <Output 
+              shortUrl={this.state.shortenedUrl} 
+              style={resultStyle}
             />
-            {this.state.shortenedUrl!=='Invalid URL'
-              ?this.state.shortenedUrl===''
+            {this.state.shortenedUrl !== 'Invalid URL'
+              ?this.state.shortenedUrl === ''
                 ?<div/>
                 :<CopyButton onClick={this.copy}/>
               :<div/>}
