@@ -39,7 +39,7 @@ class App extends React.Component {
       this.setState({
         error: 'Invalid URL',
         shortenedUrl: '',
-        isLoading: true
+        isLoading: false
       });
     });
   }
