@@ -12,6 +12,7 @@ class App extends React.Component {
     this.state ={
       url: '',
       shortenedUrl: '',
+      error: '',
       isCopied: false
     };
   }
@@ -26,15 +27,19 @@ class App extends React.Component {
      {url: this.state.url})
      .then((response) => {
       this.setState({
-      shortenedUrl: response.data.result_url
+      shortenedUrl: response.data.result_url,
+      error: ''
     })})
     .catch((error) =>{  
+      console.log(error);
       this.setState({
-        shortenedUrl: "Invalid URL"
+        error: 'Invalid URL',
+        shortenedUrl: ''
       });
     });
   }
  copy = () =>{
+   console.log("Copied");
    const {shortenedUrl} = this.state;
    if(shortenedUrl !== '' && shortenedUrl !== 'Invalid URL'){
     copy(this.state.shortenedUrl);
@@ -46,7 +51,7 @@ class App extends React.Component {
   render(){
     let resultStyle = {
     };
-    this.state.shortenedUrl === 'Invalid URL'
+    this.state.error === 'Invalid URL'
       ?resultStyle.color = 'red'
       :resultStyle.color = 'black';
       return(
@@ -60,10 +65,11 @@ class App extends React.Component {
             />
           <Form.Row className='row-3'>
             <Output 
+              error={this.state.error}
               shortUrl={this.state.shortenedUrl} 
               style={resultStyle}
             />
-            {this.state.shortenedUrl !== 'Invalid URL'
+            {this.state.error !== 'Invalid URL'
               ?this.state.shortenedUrl === ''
                 ?<div/>
                 :<CopyButton onClick={this.copy}/>

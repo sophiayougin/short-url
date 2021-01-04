@@ -7,7 +7,9 @@ class Output extends React.Component{
             <div className='output'>
                 <Form.Label 
                     style={this.props.style}>
-                    {this.props.shortUrl}
+                    {this.props.shortUrl !==''
+                    ?this.props.shortUrl
+                    :this.props.error}
                 </Form.Label>
             </div>
         );
