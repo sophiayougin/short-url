@@ -18,7 +18,9 @@ class Input extends React.Component{
                     <Button 
                         variant="primary"
                         onClick={this.props.onClick}>
-                        Shorten
+                        {this.props.isLoading
+                        ?'Loading..'
+                        :'Shorten'}
                     </Button>
                 </Form.Row>
             </div>

@@ -13,7 +13,8 @@ class App extends React.Component {
       url: '',
       shortenedUrl: '',
       error: '',
-      isCopied: false
+      isCopied: false,
+      isLoading: false
     };
   }
   getUrl = (e) =>{
@@ -23,18 +24,22 @@ class App extends React.Component {
     });
   }
   sendRequest =() =>{
+    this.setState({
+      isLoading: true
+    });
     axios.post('https://cors-anywhere.herokuapp.com/https://cleanuri.com/api/v1/shorten',
      {url: this.state.url})
      .then((response) => {
       this.setState({
       shortenedUrl: response.data.result_url,
-      error: ''
+      error: '',
+      isLoading: false
     })})
     .catch((error) =>{  
-      console.log(error);
       this.setState({
         error: 'Invalid URL',
-        shortenedUrl: ''
+        shortenedUrl: '',
+        isLoading: true
       });
     });
   }
@@ -62,6 +67,7 @@ class App extends React.Component {
             <Input 
               onClick={this.sendRequest} 
               onGetUrl={(e) => this.getUrl(e)}
+              isLoading={this.state.isLoading}
             />
           <Form.Row className='row-3'>
             <Output 
